@@ -4,7 +4,8 @@
   "description": "Backend for react-spotify client",
   "version": "0.0.2",
   "scripts": {
-    "start": "nodemon ./app.js"
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.3",
