@@ -73,7 +73,8 @@ app.get('/login', function(req, res) {
 
 app.post('/refresh', function(req, res) {
   req.on('data', function(data) {
-    var token = JSON.parse(data).refresh_token;
+    const tokenObj = JSON.parse(data).data;
+    const token = JSON.parse(tokenObj).refresh_token;
     var authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
@@ -88,7 +89,11 @@ app.post('/refresh', function(req, res) {
       json: true
     };
     request.post(authOptions, function(err, response, body) {
-      res.json(response.body);
+      if (!err && response.statusCode === 200) {
+        res.json(response.body);
+      } else {
+        res.status(response.statusCode).json(err);
+      }
     });
   });
 });
@@ -150,33 +155,6 @@ app.get('/callback', function(req, res) {
       }
     });
   }
-});
-
-app.get('/refresh_token', function(req, res) {
-  // requesting access token from refresh token
-  var refresh_token = req.query.refresh_token;
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: {
-      Authorization:
-        'Basic ' +
-        createBuffer(client_id + ':' + client_secret).toString('base64')
-    },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
-
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
-      res.send({
-        access_token: access_token
-      });
-    }
-  });
 });
 
 // A polyfill for new Buffer() which is deprecated in new Node versions in favor or Buffer.from()
