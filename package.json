@@ -1,0 +1,20 @@
+{
+  "author": "Spotify",
+  "name": "react-spotify-backend",
+  "description": "Backend for react-spotify client",
+  "version": "0.0.2",
+  "scripts": {
+    "start": "nodemon ./app.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "querystring": "~0.2.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
