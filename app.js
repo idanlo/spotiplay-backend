@@ -52,6 +52,10 @@ var app = express();
 
 app.use(cors()).use(cookieParser());
 
+app.get('/', function(req, res) {
+  res.status(200).send('Spotiplay');
+});
+
 app.get('/login', function(req, res) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
